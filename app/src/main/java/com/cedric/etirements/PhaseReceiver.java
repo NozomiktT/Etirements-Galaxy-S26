@@ -2,6 +2,8 @@ package com.cedric.etirements;
 
 import android.app.*;
 import android.content.*;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.*;
 
 public class PhaseReceiver extends BroadcastReceiver {
@@ -39,7 +41,7 @@ public class PhaseReceiver extends BroadcastReceiver {
 
         long now = SystemClock.elapsedRealtime();
         long scheduledEnd = s.getLong("end", now);
-        long delay = Math.max(0, now - scheduledEnd); // Retard éventuel en ms
+        long delay = Math.max(0, now - scheduledEnd);
 
         boolean workPhase = s.getBoolean("workPhase", true);
         boolean nextWork = !workPhase;
@@ -48,7 +50,6 @@ public class PhaseReceiver extends BroadcastReceiver {
 
         int totalSeconds = nextWork ? StretchWidget.work(c) : StretchWidget.rest(c);
         
-        // On déduit le retard accumulé pour recalibrer le temps de la nouvelle phase
         long durationMs = Math.max(1000L, (totalSeconds * 1000L) - delay);
         long end = now + durationMs;
 
@@ -58,7 +59,7 @@ public class PhaseReceiver extends BroadcastReceiver {
                .putLong("end", end)
                .apply();
 
-        // Signal vibreur à chaque transition
+        // 1. Signal Vibreur
         Vibrator v = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
         if (v != null && v.hasVibrator()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -66,6 +67,14 @@ public class PhaseReceiver extends BroadcastReceiver {
             } else {
                 v.vibrate(200);
             }
+        }
+
+        // 2. Signal Sonore (Bip court système)
+        try {
+            ToneGenerator toneGen = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);
+            toneGen.startTone(ToneGenerator.TONE_PROP_BEEP, 150); // Bip sonore de 150ms
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         schedule(c, end);
