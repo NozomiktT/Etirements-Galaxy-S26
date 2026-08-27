@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent" android:layout_height="match_parent"
+ android:orientation="vertical" android:padding="24dp" android:gravity="center"
+ android:background="#111827">
+ <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+  android:text="Étirements" android:textColor="#F8FAFC" android:textSize="30sp" android:textStyle="bold"/>
+ <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+  android:text="Réglages du widget" android:textColor="#94A3B8" android:layout_marginBottom="28dp"/>
+ <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
+  <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+   android:text="Étirement (secondes)" android:textColor="#F8FAFC"/>
+  <EditText android:id="@+id/work" android:layout_width="70dp" android:layout_height="wrap_content"
+   android:inputType="number" android:text="30" android:textColor="#F8FAFC"/>
+ </LinearLayout>
+ <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
+  <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+   android:text="Repos (secondes)" android:textColor="#F8FAFC"/>
+  <EditText android:id="@+id/rest" android:layout_width="70dp" android:layout_height="wrap_content"
+   android:inputType="number" android:text="5" android:textColor="#F8FAFC"/>
+ </LinearLayout>
+ <Button android:id="@+id/save" android:layout_width="match_parent" android:layout_height="wrap_content"
+  android:layout_marginTop="28dp" android:text="Enregistrer les réglages"/>
+ <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+  android:layout_marginTop="24dp" android:text="Ajoute ensuite le widget « Étirements » à ton écran d'accueil. Le compteur utilise le chronomètre Android du widget et les transitions sont pilotées par AlarmManager."
+  android:textColor="#94A3B8"/>
+</LinearLayout>
